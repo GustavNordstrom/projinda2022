@@ -45,10 +45,12 @@ public class Renderer {
 
         // Player falling
         if (!platformCollision()){
-            world.player.position.y -= 50 * Gdx.graphics.getDeltaTime();
+            world.player.velocity.add(World.gravity.x * Gdx.graphics.getDeltaTime(), World.gravity.y * Gdx.graphics.getDeltaTime());
+            world.player.position.y += world.player.velocity.y * Gdx.graphics.getDeltaTime();
             world.player.bounds.setY(world.player.position.y);
+        } else {
+            world.player.velocity.y = 0;
         }
-
     }
 
     //In this class temporarily
