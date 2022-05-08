@@ -47,10 +47,11 @@ public class Renderer {
         if (!platformCollision()){
             world.player.velocity.add(World.gravity.x * Gdx.graphics.getDeltaTime(), World.gravity.y * Gdx.graphics.getDeltaTime());
             world.player.position.y += world.player.velocity.y * Gdx.graphics.getDeltaTime();
-            world.player.bounds.setY(world.player.position.y);
         } else {
-            world.player.velocity.y = 0;
+            world.player.velocity.y = 400;
+            world.player.position.y += 5;
         }
+        world.player.bounds.setY(world.player.position.y);
     }
 
     //In this class temporarily
