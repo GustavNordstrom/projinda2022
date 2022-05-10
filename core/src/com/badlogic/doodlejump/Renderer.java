@@ -22,6 +22,8 @@ public class Renderer {
 
     public void render(){
         camera.update();
+        //Move camera when player jumps higher
+        if (world.player.position.y > camera.position.y) camera.position.y = world.player.position.y;
         batch.setProjectionMatrix(camera.combined);
         renderObjects();
     }
@@ -60,8 +62,12 @@ public class Renderer {
     // platform from above is counted as a collision
     private boolean platformCollision(){
         for (int i = 0; i < world.platforms.size; i++){
-            if (world.platforms.get(i).bounds.overlaps(world.player.bounds)){
-                return true;
+            if (world.platforms.get(i).position.y < world.player.position.y) {
+                if (world.platforms.get(i).bounds.overlaps(world.player.bounds)) {
+                    if (world.player.velocity.y < 0) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
