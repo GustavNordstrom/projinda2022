@@ -31,15 +31,15 @@ public class World {
         Random rng = new Random();
         for (int i = 1; i < 11; i++) {
             Platform platform = new Platform(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
-            generateSpring(platform.position.x, platform.position.y + platform.PLATFORM_HEIGHT, platform.PLATFORM_WIDTH);
+            generateSpring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT, Platform.PLATFORM_WIDTH);
             platforms.add(platform);
         }
     }
 
     private void generateSpring(float x, float y, float width){
         Random rng = new Random();
-        if (rng.nextInt(10) < 2) return;
-        Spring spring = new Spring(rng.nextInt((int) width) + x, y);
+        if (rng.nextInt(10) < 7) return;
+        Spring spring = new Spring(rng.nextInt((int) (width - Spring.SPRING_WIDTH)) + x, y);
         springs.add(spring);
     }
 }
