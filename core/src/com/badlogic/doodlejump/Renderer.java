@@ -36,6 +36,9 @@ public class Renderer {
         for (int i = 0; i < world.platforms.size; i++){
             batch.draw(Assets.platformImage, world.platforms.get(i).position.x, world.platforms.get(i).position.y);
         }
+        for (int i = 0; i < world.springs.size; i++){
+            batch.draw(Assets.springImage, world.springs.get(i).position.x, world.springs.get(i).position.y);
+        }
         batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
         batch.end();
 
