@@ -36,6 +36,9 @@ public class Renderer {
         for (int i = 0; i < world.platforms.size; i++){
             batch.draw(Assets.platformImage, world.platforms.get(i).position.x, world.platforms.get(i).position.y);
         }
+        for (int i = 0; i < world.springs.size; i++){
+            batch.draw(Assets.springImage, world.springs.get(i).position.x, world.springs.get(i).position.y);
+        }
         batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
         batch.end();
 
@@ -50,6 +53,10 @@ public class Renderer {
         if (!platformCollision()){
             world.player.velocity.add(World.gravity.x * Gdx.graphics.getDeltaTime(), World.gravity.y * Gdx.graphics.getDeltaTime());
             world.player.position.y += world.player.velocity.y * Gdx.graphics.getDeltaTime();
+        } else if (springCollision()){
+            Assets.springSound.play();
+            world.player.velocity.y = 800;
+            world.player.position.y += 5;
         } else {
             world.player.velocity.y = 400;
             world.player.position.y += 5;
@@ -69,6 +76,15 @@ public class Renderer {
                         return true;
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    private boolean springCollision(){
+        for (int i = 0; i < world.springs.size; i++){
+            if (world.springs.get(i).bounds.overlaps(world.player.bounds)) {
+                return true;
             }
         }
         return false;

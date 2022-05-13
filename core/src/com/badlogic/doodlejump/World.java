@@ -10,10 +10,12 @@ public class World {
 
     public final Player player;
     public Array<Platform> platforms;
+    public Array<Spring> springs;
 
     public World(){
         this.player = new Player(250, 200);
         this.platforms = new Array<>();
+        this.springs = new Array<>();
         generateWorld();
     }
 
@@ -29,7 +31,15 @@ public class World {
         Random rng = new Random();
         for (int i = 1; i < 11; i++) {
             Platform platform = new Platform(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
+            generateSpring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT, Platform.PLATFORM_WIDTH);
             platforms.add(platform);
         }
+    }
+
+    private void generateSpring(float x, float y, float width){
+        Random rng = new Random();
+        if (rng.nextInt(10) < 7) return;
+        Spring spring = new Spring(rng.nextInt((int) (width - Spring.SPRING_WIDTH)) + x, y);
+        springs.add(spring);
     }
 }
