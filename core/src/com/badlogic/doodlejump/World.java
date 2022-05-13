@@ -21,9 +21,14 @@ public class World {
         //Generate starting platform
         Platform firstPlat = new Platform(250, 0);
         platforms.add(firstPlat);
+    }
+
+    public void generatePlatforms(){
+        int platformY = (int) platforms.get(platforms.size-1).position.y;
+        if(platformY - player.position.y >= 400) return;
         Random rng = new Random();
-        for (int i = 1; i < 16; i++) {
-            Platform platform = new Platform(rng.nextInt(400), rng.nextInt(100) + 200*i);
+        for (int i = 1; i < 11; i++) {
+            Platform platform = new Platform(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
             platforms.add(platform);
         }
     }
