@@ -25,6 +25,7 @@ public class Renderer {
         //Move camera when player jumps higher
         if (world.player.position.y > camera.position.y) camera.position.y = world.player.position.y;
         batch.setProjectionMatrix(camera.combined);
+        world.generatePlatforms();
         renderObjects();
     }
 
