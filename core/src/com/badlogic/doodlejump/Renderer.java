@@ -54,6 +54,7 @@ public class Renderer {
             world.player.velocity.add(World.gravity.x * Gdx.graphics.getDeltaTime(), World.gravity.y * Gdx.graphics.getDeltaTime());
             world.player.position.y += world.player.velocity.y * Gdx.graphics.getDeltaTime();
         } else if (springCollision()){
+            Assets.springSound.play();
             world.player.velocity.y = 800;
             world.player.position.y += 5;
         } else {
