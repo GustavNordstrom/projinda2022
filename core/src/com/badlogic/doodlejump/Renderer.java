@@ -39,6 +39,15 @@ public class Renderer {
         for (int i = 0; i < world.springs.size; i++){
             batch.draw(Assets.springImage, world.springs.get(i).position.x, world.springs.get(i).position.y);
         }
+        for (int i = 0; i < world.monsters.size; i++){
+            world.monsters.get(i).move();
+            if (world.monsters.get(i).movingRight) {
+                batch.draw(Assets.monsterRightImage, world.monsters.get(i).position.x, world.monsters.get(i).position.y);
+            }
+            else {
+                batch.draw(Assets.monsterLeftImage, world.monsters.get(i).position.x, world.monsters.get(i).position.y);
+            }
+        }
         batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
         batch.end();
 
@@ -57,7 +66,10 @@ public class Renderer {
             Assets.springSound.play();
             world.player.velocity.y = 800;
             world.player.position.y += 5;
-        } else {
+        } else if (monsterCollision()) {
+            //Game over
+        }
+        else {
             world.player.velocity.y = 400;
             world.player.position.y += 5;
         }
@@ -65,9 +77,6 @@ public class Renderer {
     }
 
     //In this class temporarily
-    // TODO:
-    // Make it so that only contact with the top of the
-    // platform from above is counted as a collision
     private boolean platformCollision(){
         for (int i = 0; i < world.platforms.size; i++){
             if (world.platforms.get(i).position.y < world.player.position.y) {
@@ -84,6 +93,15 @@ public class Renderer {
     private boolean springCollision(){
         for (int i = 0; i < world.springs.size; i++){
             if (world.springs.get(i).bounds.overlaps(world.player.bounds)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean monsterCollision(){
+        for (int i = 0; i < world.monsters.size; i++){
+            if (world.monsters.get(i).bounds.overlaps(world.player.bounds)) {
                 return true;
             }
         }
