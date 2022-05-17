@@ -1,18 +1,18 @@
 package com.badlogic.doodlejump;
 
 public class Monster extends GameObject{
-    public static final float MONSTER_WIDTH = 53;
-    public static final float MONSTER_HEIGHT = 65;
+    public static final float MONSTER_WIDTH = 38;
+    public static final float MONSTER_HEIGHT = 46;
     private static final float speed = 1;
     public boolean movingRight;
-    private float startingPoint;
-    private float range;
+    private final float startingPoint;
+    private final float range;
 
     public Monster(float x, float y, float platformWidth) {
         super(x, y-10, MONSTER_WIDTH, MONSTER_HEIGHT);
         movingRight = true;
-        startingPoint = x;
-        range = platformWidth;
+        this.startingPoint = x;
+        this.range = platformWidth;
     }
 
     public void direction(){
