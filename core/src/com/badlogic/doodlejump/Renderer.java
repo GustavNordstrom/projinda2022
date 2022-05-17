@@ -10,8 +10,10 @@ public class Renderer {
     World world;
     SpriteBatch batch;
     private OrthographicCamera camera;
+    final DoodleJump game;
 
-    public Renderer(SpriteBatch batch, World world){
+    public Renderer(SpriteBatch batch, World world, DoodleJump game){
+        this.game = game;
         this.batch = batch;
         this.world = world;
 
@@ -24,6 +26,8 @@ public class Renderer {
         camera.update();
         //Move camera when player jumps higher
         if (world.player.position.y > camera.position.y) camera.position.y = world.player.position.y;
+        //End game if player falls below camera
+        if (world.player.position.y < camera.position.y - 400) game.setScreen(new EndScreen(game));
         batch.setProjectionMatrix(camera.combined);
         world.generatePlatforms();
         renderObjects();
@@ -31,7 +35,7 @@ public class Renderer {
 
     private void renderObjects() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        // Render player and platforms
+        // Render player, platforms, springs and monsters
         batch.begin();
         for (int i = 0; i < world.platforms.size; i++){
             batch.draw(Assets.platformImage, world.platforms.get(i).position.x, world.platforms.get(i).position.y);
@@ -69,6 +73,7 @@ public class Renderer {
         } else if (monsterCollision()) {
             Assets.monsterSound.play();
             //Game over
+            game.setScreen(new EndScreen(game));
         }
         else {
             world.player.velocity.y = 400;
