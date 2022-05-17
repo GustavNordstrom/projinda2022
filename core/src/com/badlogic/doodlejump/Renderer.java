@@ -67,6 +67,7 @@ public class Renderer {
             world.player.velocity.y = 800;
             world.player.position.y += 5;
         } else if (monsterCollision()) {
+            Assets.monsterSound.play();
             //Game over
         }
         else {
