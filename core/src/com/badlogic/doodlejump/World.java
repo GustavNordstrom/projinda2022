@@ -2,6 +2,7 @@ package com.badlogic.doodlejump;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.Random;
 
@@ -16,6 +17,13 @@ public class World {
     public Array<Monster> monsters;
     public int state;
 
+    private final Pool<Platform> platformPool = new Pool<Platform>() {
+        @Override
+        protected Platform newObject() {
+            return new Platform();
+        }
+    };
+
     public World(){
         this.player = new Player(250, 200);
         this.platforms = new Array<>();
@@ -28,6 +36,29 @@ public class World {
     public void update(float delta){
         player.update(delta);
         checkCollisions(delta);
+        checkOffScreenItems();
+        generatePlatforms();
+        addPlatformsToPool();
+    }
+
+    private void checkOffScreenItems() {
+        for (int i = 0; i < platforms.size; i++){
+            if (player.position.y - platforms.get(i).position.y > 400){
+                platforms.get(i).onScreen = false;
+            }
+        }
+    }
+
+    private void addPlatformsToPool(){
+        Platform platform;
+        int len = platforms.size;
+        for (int i = len; --i >= 0;) {
+            platform = platforms.get(i);
+            if (!platform.onScreen) {
+                platforms.removeIndex(i);
+                platformPool.free(platform);
+            }
+        }
     }
 
     private void checkCollisions(float delta) {
@@ -42,7 +73,6 @@ public class World {
                 Assets.monsterSound.play();
                 //Game over
                 state = WORLD_STATE_END;
-                //game.setScreen(new EndScreen(game));
             }
         }
     }
@@ -71,9 +101,9 @@ public class World {
     }
 
     private void generateWorld(){
-        //Generate starting platform
-        Platform firstPlat = new Platform(250, 0);
-        platforms.add(firstPlat);
+        Platform platform = platformPool.obtain();
+        platform.init(250, 0);
+        platforms.add(platform);
     }
 
     public void generatePlatforms(){
@@ -81,10 +111,11 @@ public class World {
         if(platformY - player.position.y >= 400) return;
         Random rng = new Random();
         for (int i = 1; i < 11; i++) {
-            Platform platform = new Platform(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
+            Platform platform = platformPool.obtain();
+            platform.init(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
+            platforms.add(platform);
             generateSpring(platform.position.x, platform.position.y + Platform.PLATFORM_HEIGHT, Platform.PLATFORM_WIDTH);
             generateMonster(platform.position.x, platform.position.y, Platform.PLATFORM_HEIGHT, Platform.PLATFORM_WIDTH);
-            platforms.add(platform);
         }
     }
 

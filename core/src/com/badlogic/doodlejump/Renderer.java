@@ -29,7 +29,6 @@ public class Renderer {
         //End game if player falls below camera
         if (world.player.position.y < camera.position.y - 400) world.state = World.WORLD_STATE_END;
         batch.setProjectionMatrix(camera.combined);
-        world.generatePlatforms();
         renderObjects();
     }
 
