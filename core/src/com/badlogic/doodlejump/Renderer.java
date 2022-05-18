@@ -27,7 +27,7 @@ public class Renderer {
         //Move camera when player jumps higher
         if (world.player.position.y > camera.position.y) camera.position.y = world.player.position.y;
         //End game if player falls below camera
-        if (world.player.position.y < camera.position.y - 400) game.setScreen(new EndScreen(game));
+        if (world.player.position.y < camera.position.y - 400) world.state = World.WORLD_STATE_END;
         batch.setProjectionMatrix(camera.combined);
         world.generatePlatforms();
         renderObjects();
@@ -54,21 +54,5 @@ public class Renderer {
         }
         batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
         batch.end();
-
-      /*  if (monsterCollision()) {
-            Assets.monsterSound.play();
-            //Game over
-            game.setScreen(new EndScreen(game));
-        }*/
-    }
-
-
-    private boolean monsterCollision(){
-        for (int i = 0; i < world.monsters.size; i++){
-            if (world.monsters.get(i).bounds.overlaps(world.player.bounds)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

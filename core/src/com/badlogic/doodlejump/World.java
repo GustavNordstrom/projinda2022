@@ -7,17 +7,21 @@ import java.util.Random;
 
 public class World {
     public static final Vector2 gravity = new Vector2(0, -300);
+    public static final int WORLD_STATE_END = 0;
+    public static final int WORLD_STATE_RUNNING = 1;
 
     public final Player player;
     public Array<Platform> platforms;
     public Array<Spring> springs;
     public Array<Monster> monsters;
+    public int state;
 
     public World(){
         this.player = new Player(250, 200);
         this.platforms = new Array<>();
         this.springs = new Array<>();
         this.monsters = new Array<>();
+        this.state = WORLD_STATE_RUNNING;
         generateWorld();
     }
 
@@ -29,12 +33,26 @@ public class World {
     private void checkCollisions(float delta) {
         checkSpringCollision();
         checkPlatformCollision(delta);
+        checkMonsterCollision();
+    }
+
+    private void checkMonsterCollision() {
+        for (int i = 0; i < monsters.size; i++){
+            if (monsters.get(i).bounds.overlaps(player.bounds)) {
+                Assets.monsterSound.play();
+                //Game over
+                state = WORLD_STATE_END;
+                //game.setScreen(new EndScreen(game));
+            }
+        }
     }
 
     private void checkSpringCollision() {
         for (int i = 0; i < springs.size; i++){
-            if (springs.get(i).bounds.overlaps(player.bounds)) {
-                if (player.velocity.y < 0) player.hitSpring();
+            if (springs.get(i).position.y < player.position.y) {
+                if (springs.get(i).bounds.overlaps(player.bounds)) {
+                    if (player.velocity.y < 0) player.hitSpring();
+                }
             }
         }
     }

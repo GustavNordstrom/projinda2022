@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
+    static final int GAME_OVER = 0;
+
     final DoodleJump game;
     World world;
     Renderer renderer;
@@ -23,6 +25,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (world.state == World.WORLD_STATE_END) game.setScreen(new EndScreen(game));
         renderer.render();
         world.update(Gdx.graphics.getDeltaTime());
     }
