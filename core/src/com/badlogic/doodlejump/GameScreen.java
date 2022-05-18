@@ -11,7 +11,7 @@ public class GameScreen implements Screen {
     public GameScreen(final DoodleJump game){
         this.game = game;
         world = new World();
-        renderer = new Renderer(game.batch, world);
+        renderer = new Renderer(game.batch, world, game);
 
         Assets.load();
     }
