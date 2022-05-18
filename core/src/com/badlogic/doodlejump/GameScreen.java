@@ -1,5 +1,6 @@
 package com.badlogic.doodlejump;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class GameScreen implements Screen {
@@ -23,6 +24,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         renderer.render();
+        world.update(Gdx.graphics.getDeltaTime());
     }
 
     @Override

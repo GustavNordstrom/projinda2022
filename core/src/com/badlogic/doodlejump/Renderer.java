@@ -41,52 +41,5 @@ public class Renderer {
         }
         batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
         batch.end();
-
-        // Sideways movement player
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) world.player.position.x -= 200 * Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) world.player.position.x += 200 * Gdx.graphics.getDeltaTime();
-        if(world.player.position.x < 0) world.player.position.x = 0;
-        if(world.player.position.x > 500 - Player.PLAYER_WIDTH) world.player.position.x = 500 - Player.PLAYER_WIDTH;
-        world.player.bounds.setX(world.player.position.x);
-
-        // Player falling
-        if (!platformCollision()){
-            world.player.velocity.add(World.gravity.x * Gdx.graphics.getDeltaTime(), World.gravity.y * Gdx.graphics.getDeltaTime());
-            world.player.position.y += world.player.velocity.y * Gdx.graphics.getDeltaTime();
-        } else if (springCollision()){
-            Assets.springSound.play();
-            world.player.velocity.y = 800;
-            world.player.position.y += 5;
-        } else {
-            world.player.velocity.y = 400;
-            world.player.position.y += 5;
-        }
-        world.player.bounds.setY(world.player.position.y);
-    }
-
-    //In this class temporarily
-    // TODO:
-    // Make it so that only contact with the top of the
-    // platform from above is counted as a collision
-    private boolean platformCollision(){
-        for (int i = 0; i < world.platforms.size; i++){
-            if (world.platforms.get(i).position.y < world.player.position.y) {
-                if (world.platforms.get(i).bounds.overlaps(world.player.bounds)) {
-                    if (world.player.velocity.y < 0) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean springCollision(){
-        for (int i = 0; i < world.springs.size; i++){
-            if (world.springs.get(i).bounds.overlaps(world.player.bounds)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

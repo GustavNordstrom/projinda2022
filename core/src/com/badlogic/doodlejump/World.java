@@ -19,6 +19,37 @@ public class World {
         generateWorld();
     }
 
+    public void update(float delta){
+        player.update(delta);
+        checkCollisions(delta);
+    }
+
+    private void checkCollisions(float delta) {
+        checkSpringCollision();
+        checkPlatformCollision(delta);
+    }
+
+    private void checkSpringCollision() {
+        for (int i = 0; i < springs.size; i++){
+            if (springs.get(i).bounds.overlaps(player.bounds)) {
+                if (player.velocity.y < 0) player.hitSpring();
+            }
+        }
+    }
+
+    private void checkPlatformCollision(float delta) {
+        for (int i = 0; i < platforms.size; i++){
+            if (platforms.get(i).position.y < player.position.y) {
+                if (platforms.get(i).bounds.overlaps(player.bounds)) {
+                    if (player.velocity.y < 0) {
+                        player.hitPlatform();
+                    }
+                }
+            }
+        }
+        player.noHit(delta);
+    }
+
     private void generateWorld(){
         //Generate starting platform
         Platform firstPlat = new Platform(250, 0);
