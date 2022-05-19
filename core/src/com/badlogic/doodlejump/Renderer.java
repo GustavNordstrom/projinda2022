@@ -3,6 +3,7 @@ package com.badlogic.doodlejump;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -51,7 +52,13 @@ public class Renderer {
                 batch.draw(Assets.monsterLeftImage, world.monsters.get(i).position.x, world.monsters.get(i).position.y);
             }
         }
-        batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
+        Texture playerImage;
+        if (world.player.movingRight) {
+            playerImage = Assets.playerImage1;
+        } else {
+            playerImage = Assets.playerImage2;
+        }
+        batch.draw(playerImage, world.player.position.x, world.player.position.y);
         batch.end();
     }
 }
