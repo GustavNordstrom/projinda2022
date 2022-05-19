@@ -23,8 +23,8 @@ public class Player extends DynamicGameObject{
             position.x += 200 * Gdx.graphics.getDeltaTime();
             movingRight = true;
         }
-        if(position.x < 0) position.x = 0;
-        if(position.x > 500 - Player.PLAYER_WIDTH) position.x = 500 - Player.PLAYER_WIDTH;
+        if(position.x + PLAYER_WIDTH / 2 < 0) position.x = 500 - PLAYER_WIDTH / 2;
+        if(position.x > 500 - Player.PLAYER_WIDTH / 2) position.x = - Player.PLAYER_WIDTH / 2;
         bounds.setX(position.x);
         bounds.setY(position.y);
     }
