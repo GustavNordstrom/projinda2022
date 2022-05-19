@@ -11,6 +11,7 @@ public class Assets {
     public static Texture springImage;
     public static Sound springSound;
     public static Sound jumpSound;
+    public static Sound fallingSound;
     public static Texture monsterLeftImage;
     public static Texture monsterRightImage;
     public static Sound monsterSound;
@@ -27,6 +28,7 @@ public class Assets {
         // Load sound
         springSound = Gdx.audio.newSound(Gdx.files.internal("spring.wav"));
         jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.wav"));
+        fallingSound = Gdx.audio.newSound(Gdx.files.internal("falling.wav"));
         monsterSound = Gdx.audio.newSound(Gdx.files.internal("monster_roar.wav"));
     }
 }
