@@ -3,6 +3,7 @@ package com.badlogic.doodlejump;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -27,7 +28,10 @@ public class Renderer {
         //Move camera when player jumps higher
         if (world.player.position.y > camera.position.y) camera.position.y = world.player.position.y;
         //End game if player falls below camera
-        if (world.player.position.y < camera.position.y - 400) world.state = World.WORLD_STATE_END;
+        if (world.player.position.y < camera.position.y - 400) {
+            Assets.fallingSound.play();
+            world.state = World.WORLD_STATE_END;
+        }
         batch.setProjectionMatrix(camera.combined);
         renderObjects();
     }
@@ -51,7 +55,13 @@ public class Renderer {
                 batch.draw(Assets.monsterLeftImage, world.monsters.get(i).position.x, world.monsters.get(i).position.y);
             }
         }
-        batch.draw(Assets.playerImage, world.player.position.x, world.player.position.y);
+        Texture playerImage;
+        if (world.player.movingRight) {
+            playerImage = Assets.playerImage1;
+        } else {
+            playerImage = Assets.playerImage2;
+        }
+        batch.draw(playerImage, world.player.position.x, world.player.position.y);
         batch.end();
     }
 }

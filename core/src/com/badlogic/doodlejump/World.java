@@ -110,7 +110,7 @@ public class World {
         int platformY = (int) platforms.get(platforms.size-1).position.y;
         if(platformY - player.position.y >= 400) return;
         Random rng = new Random();
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < 6; i++) {
             Platform platform = platformPool.obtain();
             platform.init(rng.nextInt(400), rng.nextInt(100) + 200* i + platformY);
             platforms.add(platform);
