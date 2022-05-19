@@ -30,6 +30,7 @@ public class Player extends DynamicGameObject{
     }
 
     public void hitPlatform(){
+        Assets.jumpSound.play();
         velocity.y = 400;
         position.y += 5;
     }
