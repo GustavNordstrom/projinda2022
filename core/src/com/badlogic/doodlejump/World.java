@@ -33,6 +33,11 @@ public class World {
         generateWorld();
     }
 
+    /**
+     * Update all objects, including platforms, monsters, player and springs
+     *
+     * @param delta the delta time between each update
+     */
     public void update(float delta){
         player.update(delta);
         checkCollisions(delta);
@@ -106,6 +111,9 @@ public class World {
         platforms.add(platform);
     }
 
+    /**
+     * Generate new platforms for the player to jump on, starting above the current highest platform.
+     */
     public void generatePlatforms(){
         int platformY = (int) platforms.get(platforms.size-1).position.y;
         if(platformY - player.position.y >= 400) return;

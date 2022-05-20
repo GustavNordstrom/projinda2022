@@ -23,6 +23,11 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * Render the game screen
+     *
+     * @param delta the delta time between each update
+     */
     @Override
     public void render(float delta) {
         if (world.state == World.WORLD_STATE_END) game.setScreen(new EndScreen(game));
