@@ -22,6 +22,11 @@ public class MainMenuScreen implements Screen {
 
     }
 
+    /**
+     * Render the main menu screen
+     *
+     * @param delta the delta time between each update
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
@@ -35,6 +40,7 @@ public class MainMenuScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
+            //Start game
             game.setScreen(new GameScreen(game));
             dispose();
         }

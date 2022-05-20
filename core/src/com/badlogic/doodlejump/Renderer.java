@@ -23,6 +23,9 @@ public class Renderer {
         camera.setToOrtho(false, 500, 600);
     }
 
+    /**
+     * Update and render all objects on screen
+     */
     public void render(){
         camera.update();
         //Move camera when player jumps higher

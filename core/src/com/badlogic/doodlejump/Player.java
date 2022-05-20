@@ -13,8 +13,13 @@ public class Player extends DynamicGameObject{
         super(x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
+    /**
+     * Update movement of player
+     *
+     * @param delta the delta time between each update
+     */
     public void update(float delta){
-        // Sideways movement player
+        // Sideways movement of player
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             position.x -= 200 * Gdx.graphics.getDeltaTime();
             movingRight = false;
@@ -29,18 +34,29 @@ public class Player extends DynamicGameObject{
         bounds.setY(position.y);
     }
 
+    /**
+     * Player hit a platform
+     */
     public void hitPlatform(){
         Assets.jumpSound.play();
         velocity.y = 400;
         position.y += 5;
     }
 
+    /**
+     * Player hit a spring
+     */
     public void hitSpring(){
         Assets.springSound.play();
         velocity.y = 800;
         position.y += 5;
     }
 
+    /**
+     * Player hit nothing
+     *
+     * @param delta the delta time between each update
+     */
     public void noHit(float delta){
         velocity.add(World.gravity.x * delta, World.gravity.y * delta);
         position.y += velocity.y * delta;

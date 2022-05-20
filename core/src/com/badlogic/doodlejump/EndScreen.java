@@ -21,8 +21,14 @@ public class EndScreen implements Screen {
 
     }
 
+    /**
+     * Render the end game screen
+     *
+     * @param delta the delta time between each update
+     */
     @Override
     public void render(float delta) {
+        //Clear the screen
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         camera.update();
@@ -34,6 +40,7 @@ public class EndScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
+            //Start new game
             game.setScreen(new GameScreen(game));
             dispose();
         }
