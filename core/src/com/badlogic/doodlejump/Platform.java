@@ -1,6 +1,5 @@
 package com.badlogic.doodlejump;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 
 public class Platform extends GameObject implements Pool.Poolable{
@@ -8,10 +7,6 @@ public class Platform extends GameObject implements Pool.Poolable{
     public static final float PLATFORM_HEIGHT = 45;
 
     public boolean onScreen;
-
-   /* public Platform(float x, float y){
-        super(0, 0, PLATFORM_WIDTH, PLATFORM_HEIGHT);
-    }*/
 
     public Platform(){
         super(0, 0, PLATFORM_WIDTH, PLATFORM_HEIGHT);

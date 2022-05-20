@@ -40,7 +40,6 @@ public class Player extends DynamicGameObject{
     public void hitPlatform(){
         Assets.jumpSound.play();
         velocity.y = 400;
-        position.y += 5;
     }
 
     /**
@@ -49,7 +48,6 @@ public class Player extends DynamicGameObject{
     public void hitSpring(){
         Assets.springSound.play();
         velocity.y = 800;
-        position.y += 5;
     }
 
     /**
